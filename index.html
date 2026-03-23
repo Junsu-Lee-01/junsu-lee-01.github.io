@@ -3,35 +3,42 @@ layout: default
 title: Home
 ---
 
-<div class="posts">
-  {% for post in paginator.posts %}
-  <div class="post">
-    <h1 class="post-title">
-      <a href="{{ post.url }}">
-        {{ post.title }}
-      </a>
-    </h1>
+<section id="about" style="margin-bottom: 3rem;">
+  <h2>About</h2>
+  <p>여기에 본인에 대한 짧은 소개를 적으세요. (예: 어떤 문제를 해결하는 것을 좋아하는 개발자입니다.)</p>
+</section>
 
-    <span class="post-date">{{ post.date | date_to_string }}</span>
+<hr>
 
-    {{ post.content }}
+<section id="experience" style="margin-bottom: 3rem;">
+  <h2>Experience</h2>
+  <div class="exp-item">
+    <h3>회사 이름 / 직무</h3>
+    <p><em>2024.01 - 현재</em></p>
+    <ul>
+      <li>주요 성과 1</li>
+      <li>주요 성과 2</li>
+    </ul>
   </div>
-  {% endfor %}
-</div>
+</section>
 
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ site.baseurl }}page{{paginator.next_page}}">Older</a>
-  {% else %}
-    <span class="pagination-item older">Older</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}">Newer</a>
-    {% else %}
-      <a class="pagination-item newer" href="{{ site.baseurl }}page{{paginator.previous_page}}">Newer</a>
-    {% endif %}
-  {% else %}
-    <span class="pagination-item newer">Newer</span>
-  {% endif %}
-</div>
+<hr>
+
+<section id="projects" style="margin-bottom: 3rem;">
+  <h2>Projects</h2>
+  <div class="project-item">
+    <h3>프로젝트 명</h3>
+    <ul>
+      <li>프로젝트 설명 및 본인의 역할</li>
+      <li>사용 기술: React, Node.js 등</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="skills">
+  <h2>Technical Skills</h2>
+  <p><strong>Languages:</strong> Java, Python, JavaScript</p>
+  <p><strong>Tools:</strong> Git, Docker, AWS</p>
+</section>
