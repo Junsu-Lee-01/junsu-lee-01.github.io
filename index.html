@@ -1,124 +1,306 @@
 ---
-layout: default
-title: Junsu Lee · Industrial & System Engineer
+layout: null
 ---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Junsu Lee — Industrial & System Engineer</title>
+    <link rel="icon" type="image/png" href="{{ site.baseurl }}/public/logo.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ── 핵심 변수 및 테마 설정 ── */
+        :root {
+            --cream: #F8F5EF; --ink: #1A1A1A; --ink-light: #4A4A4A; --ink-faint: #7A7A7A;
+            --accent: #2563EB; --accent-light: #DBEAFE; --border: #E2DDD5;
+            --card: #FFFFFF; --card-hover: rgba(0, 0, 0, .03);
+            --sb-bg: #1A1A1A; --sb-text: #F0EDE7; --sb-muted: #888; --sb-accent: #7CB9FF;
+            --sw: 280px; --fb: 'DM Sans', 'Noto Sans KR', sans-serif; --fm: 'JetBrains Mono', monospace;
+            --ease: cubic-bezier(.25, .46, .45, .94);
+        }
 
-<section id="about" style="margin-bottom: 3rem;">
-  <h2>About</h2>
-  <p>
-    I am an <strong>Industrial and Systems Engineering</strong> student at Binghamton University with a strong focus on data-driven system optimization and backend architecture. 
-    My experience ranges from managing AI-OCR data pipelines and optimizing manufacturing quality systems to architecting RAG-based AI chatbot backends. 
-    I enjoy analyzing complex problems through an engineering lens to deliver efficient, scalable solutions.
-  </p>
-</section>
+        [data-theme="dark"] {
+            --cream: #181A1B; --ink: #E8E4DC; --ink-light: #C5C0B7; --ink-faint: #9A948C;
+            --accent: #60A5FA; --accent-light: rgba(96, 165, 250, .15); --border: #3A352F;
+            --card: #212322; --card-hover: rgba(255, 255, 255, .03);
+            --sb-bg: #111312; --sb-text: #E8E4DC; --sb-muted: #777; --sb-accent: #93C5FD;
+        }
 
-<hr>
+        /* ── 레이아웃 기본 ── */
+        * { box-sizing: border-box; margin: 0; padding: 0 }
+        html { scroll-behavior: smooth }
+        body { font-family: var(--fb); background: var(--cream); color: var(--ink); line-height: 1.7; font-size: 15px; transition: background .25s, color .25s }
 
-<section id="education" style="margin-bottom: 3rem;">
-  <h2>Education</h2>
-  <div class="edu-item">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">Binghamton University (SUNY)</h3>
-      <span style="font-style: italic; color: #666;">Expected May 2027</span>
+        /* ── 상단 토글 (Theme/Lang) ── */
+        .top-bar { position: fixed; top: 20px; right: 24px; z-index: 1000; display: flex; gap: 12px }
+        .toggle-group { display: flex; background: rgba(255, 255, 255, .8); backdrop-filter: blur(10px); border: 1px solid var(--border); border-radius: 100px; padding: 4px; box-shadow: 0 2px 10px rgba(0,0,0,.05) }
+        [data-theme="dark"] .toggle-group { background: rgba(30, 32, 33, .8) }
+        .toggle-btn { background: transparent; border: none; padding: 5px 12px; font-family: var(--fb); font-size: 12px; font-weight: 600; color: var(--ink-faint); border-radius: 100px; cursor: pointer; transition: all .2s }
+        .toggle-btn.active { background: var(--ink); color: var(--cream) }
+        [data-theme="dark"] .toggle-btn.active { background: var(--accent); color: #fff }
+
+        /* ── 사이드바 ── */
+        .sidebar { position: fixed; top: 0; left: 0; width: var(--sw); height: 100vh; background: var(--sb-bg); color: var(--sb-text); z-index: 100; overflow-y: auto }
+        .sidebar-inner { padding: 40px 32px; display: flex; flex-direction: column; min-height: 100% }
+        .profile-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.1); margin-bottom: 20px; display: block; margin-left: auto; margin-right: auto; }
+        .profile-name { font-size: 1.6rem; color: #fff; margin-bottom: 4px; font-weight: 700; text-align: center; }
+        .profile-role { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--sb-muted); font-weight: 500; text-align: center; margin-bottom: 24px; }
+        
+        .contact-item { display: flex; align-items: center; gap: 10px; font-size: 12px; color: rgba(240,237,231,.7); text-decoration: none; margin-bottom: 12px; transition: color .2s }
+        .contact-item:hover { color: var(--sb-accent) }
+        
+        .nav-link { display: block; padding: 10px 14px; font-size: 13px; font-weight: 500; color: rgba(240,237,231,.5); text-decoration: none; border-radius: 8px; transition: all .2s }
+        .nav-link:hover, .nav-link.active { color: var(--sb-accent); background: rgba(255,255,255,.05) }
+
+        /* ── 메인 콘텐츠 ── */
+        .main-content { margin-left: var(--sw); padding: 80px 64px; max-width: 1200px }
+        .content-section { margin-bottom: 60px; scroll-margin-top: 80px }
+        .section-header { display: flex; align-items: center; gap: 20px; margin-bottom: 32px }
+        .section-title { font-size: 1.5rem; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 1px }
+        .section-line { flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent) }
+
+        /* ── 프로젝트/경력 카드 (Hover 효과) ── */
+        .entry-card { 
+            border: 1px solid var(--border); border-radius: 16px; background: var(--card); 
+            padding: 24px 32px; margin-bottom: 20px; transition: all .3s var(--ease);
+            position: relative; overflow: hidden;
+        }
+        .entry-card:hover { 
+            transform: translateY(-4px); 
+            box-shadow: 0 12px 32px rgba(0,0,0,.08); 
+            border-color: var(--accent);
+        }
+        [data-theme="dark"] .entry-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,.3); }
+
+        .entry-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 12px }
+        .entry-title { font-size: 16px; font-weight: 700; color: var(--ink) }
+        .entry-period { font-family: var(--fm); font-size: 11px; color: var(--accent); font-weight: 600 }
+        .entry-sub { font-size: 14px; color: var(--ink-light); font-weight: 500; margin-bottom: 12px }
+        
+        .bullet-list { list-style: none; }
+        .bullet-list li { position: relative; padding-left: 18px; font-size: 14px; color: var(--ink-light); margin-bottom: 6px }
+        .bullet-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+
+        .tag { font-size: 11px; font-weight: 600; color: var(--ink-faint); background: var(--card-hover); padding: 4px 10px; border-radius: 6px; margin-right: 6px }
+
+        @media(max-width: 900px) {
+            .sidebar { display: none }
+            .main-content { margin-left: 0; padding: 60px 24px }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="toggle-group">
+            <button id="theme-light" class="toggle-btn active">☀️ Light</button>
+            <button id="theme-dark" class="toggle-btn">🌙 Dark</button>
+        </div>
+        <div class="toggle-group">
+            <button id="lang-en" class="toggle-btn active">🇺🇸 EN</button>
+            <button id="lang-kr" class="toggle-btn">🇰🇷 KR</button>
+        </div>
     </div>
-    <p style="margin-top: 0.5rem;"><strong>B.S. in Industrial and Systems Engineering</strong> | GPA: 3.67 / 4.00</p>
-    <ul style="font-size: 0.95rem;">
-      <li><strong>Honors:</strong> Alpha Pi Mu Industrial Engineering Honor Society, Dean's List (Fall 2020 - Fall 2021)</li>
-      <li><strong>Awards:</strong> 3rd Place - IISE Technical Paper Competition | 3rd Place - National Wind Power Forecasting Competition</li>
-      <li><strong>Relevant Coursework:</strong> Probabilistic Systems (DOE), Human Factors, Engineering Economics, Engineering Computing</li>
-    </ul>
-  </div>
-</section>
 
-<hr>
+    <aside class="sidebar">
+        <div class="sidebar-inner">
+            <img src="{{ site.baseurl }}/public/profile.jpg" class="profile-img" alt="Junsu Lee">
+            <h1 id="sidebar-name" class="profile-name">Junsu Lee</h1>
+            <p id="sidebar-role" class="profile-role">Industrial & System Engineer</p>
 
-<section id="experience" style="margin-bottom: 3rem;">
-  <h2>Professional Experience</h2>
-  
-  <div class="exp-item" style="margin-bottom: 2.5rem;">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">DP Architect</h3>
-      <span style="font-style: italic; color: #666;">Sep 2025 - Nov 2025</span>
-    </div>
-    <p><strong>Backend Developer (Freelance)</strong> | Singapore</p>
-    <ul style="font-size: 0.95rem;">
-      <li>Designed backend architecture for an AI chatbot, engineering SQL schemas for RAG-based document retrieval of complex architectural blueprints.</li>
-      <li>Architected a <strong>RabbitMQ</strong> message queuing system to ensure scalable deployment and reduce manual lookup time.</li>
-      <li><strong>Tech Stack:</strong> Python, SQL, SQLite, MongoDB, RabbitMQ, FastAPI, GitHub</li>
-    </ul>
-  </div>
+            <div style="margin-top: 20px; padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.1);">
+                <a href="mailto:leejunsu3064@gmail.com" class="contact-item">✉ leejunsu3064@gmail.com</a>
+                <a href="https://linkedin.com/in/derrick-junsu-lee" target="_blank" class="contact-item">🔗 LinkedIn Profile</a>
+            </div>
 
-  <div class="exp-item" style="margin-bottom: 2.5rem;">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">Songjee Tech</h3>
-      <span style="font-style: italic; color: #666;">Feb 2020 - Aug 2024</span>
-    </div>
-    <p><strong>Quality Engineer Manager</strong> | South Korea</p>
-    <ul style="font-size: 0.95rem;">
-      <li>Managed periodic inspection and calibration of 50+ <strong>Optical Emission Spectrometers (Bruker)</strong>, ensuring 99%+ production uptime.</li>
-      <li>Improved photon counting by 2-10x through systematic hardware diagnostics and vacuum level assessment.</li>
-      <li>Standardized software control limits using reference data to ensure precise elemental composition analysis.</li>
-    </ul>
-  </div>
+            <nav style="margin-top: 24px;" class="sidebar-nav">
+                <a href="#about" class="nav-link" data-en="About" data-kr="소개">About</a>
+                <a href="#education" class="nav-link" data-en="Education" data-kr="학력">Education</a>
+                <a href="#experience" class="nav-link" data-en="Experience" data-kr="경력">Experience</a>
+                <a href="#projects" class="nav-link" data-en="Projects" data-kr="프로젝트">Projects</a>
+                <a href="#skills" class="nav-link" data-en="Skills" data-kr="기술 스택">Skills</a>
+            </nav>
+        </div>
+    </aside>
 
-  <div class="exp-item">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">AKUO Digital</h3>
-      <span style="font-style: italic; color: #666;">Feb 2020 - Jun 2020</span>
-    </div>
-    <p><strong>AI-OCR Data Training Manager</strong> | South Korea (Hanwha Project)</p>
-    <ul style="font-size: 0.95rem;">
-      <li>Oversaw end-to-end document digitization pipeline, improving OCR accuracy through data labeling and preprocessing.</li>
-    </ul>
-  </div>
-</section>
+    <main class="main-content">
+        <section id="about" class="content-section">
+            <div class="section-header"><h2 class="section-title" id="t-about">About</h2><div class="section-line"></div></div>
+            <p id="about-text" class="hero-text" style="font-size: 1.1rem; color: var(--ink-light); max-width: 800px;"></p>
+        </section>
 
-<hr>
+        <section id="education" class="content-section">
+            <div class="section-header"><h2 class="section-title" id="t-edu">Education</h2><div class="section-line"></div></div>
+            <div id="edu-list"></div>
+        </section>
 
-<section id="projects" style="margin-bottom: 3rem;">
-  <h2>Research & Projects</h2>
-  
-  <div class="project-item" style="margin-bottom: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">National Wind Power Forecasting Competition</h3>
-      <span style="font-style: italic; color: #666;">Apr 2025 - Dec 2025</span>
-    </div>
-    <p><strong>Team Leader</strong></p>
-    <ul style="font-size: 0.95rem;">
-      <li>Developed a high-accuracy predictive model using <strong>LightGBM</strong> and Scikit-learn, achieving <strong>3rd place</strong> out of 160 teams.</li>
-      <li>Improved prediction accuracy by 8% through advanced feature engineering on volatile meteorological datasets.</li>
-    </ul>
-  </div>
+        <section id="experience" class="content-section">
+            <div class="section-header"><h2 class="section-title" id="t-exp">Experience</h2><div class="section-line"></div></div>
+            <div id="exp-list"></div>
+        </section>
 
-  <div class="project-item" style="margin-bottom: 2rem;">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">Koh Young Technology (Research)</h3>
-      <span style="font-style: italic; color: #666;">Jan 2022 - Dec 2022</span>
-    </div>
-    <p><strong>Undergraduate Research Assistant</strong></p>
-    <ul style="font-size: 0.95rem;">
-      <li>Applied <strong>DOE (Design of Experiments)</strong> to optimize SMT stencil cleaning cycles, minimizing rework and maximizing machine uptime.</li>
-      <li>Awarded 3rd Place (Solo) at the <strong>IISE Technical Paper Competition</strong>.</li>
-    </ul>
-  </div>
+        <section id="projects" class="content-section">
+            <div class="section-header"><h2 class="section-title" id="t-proj">Projects</h2><div class="section-line"></div></div>
+            <div id="proj-list"></div>
+        </section>
 
-  <div class="project-item">
-    <div style="display: flex; justify-content: space-between; align-items: baseline;">
-      <h3 style="margin-bottom: 0;">Endicott Police Dept. Bomb Squad</h3>
-      <span style="font-style: italic; color: #666;">Feb 2026 - Present</span>
-    </div>
-    <p><strong>Engineering Volunteer</strong></p>
-    <ul style="font-size: 0.95rem;">
-      <li>Spearheading 3D modeling and structural optimization of a tactical detector stand using <strong>SOLIDWORKS</strong> for enhanced field stability.</li>
-    </ul>
-  </div>
-</section>
+        <section id="skills" class="content-section">
+            <div class="section-header"><h2 class="section-title" id="t-skill">Skills</h2><div class="section-line"></div></div>
+            <div id="skill-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;"></div>
+        </section>
+    </main>
 
-<hr>
+    <script>
+        // ── 데이터 객체 (준수님 PDF 기반) ──
+        const D = {
+            info: {
+                name: { en: "Junsu Lee", kr: "이준수" },
+                role: { en: "Industrial & System Engineer", kr: "산업시스템공학도 / 백엔드 개발자" },
+                about: {
+                    en: "Binghamton University ISE student focusing on data-driven system optimization and backend architecture. Experienced in managing AI-OCR pipelines, manufacturing quality systems, and RAG-based AI backends.",
+                    kr: "데이터 기반 시스템 최적화와 백엔드 아키텍처에 집중하는 빙엄턴 대학교 산업경영공학생입니다. AI-OCR 파이프라인 관리, 제조 품질 시스템 최적화, RAG 기반 AI 백엔드 구축 등 폭넓은 경험을 보유하고 있습니다."
+                }
+            },
+            education: [{
+                period: "Expected May 2027",
+                school: { en: "Binghamton University (SUNY)", kr: "뉴욕주립대 빙엄턴 (SUNY)" },
+                degree: { en: "B.S. in Industrial and Systems Engineering", kr: "산업시스템공학 학사" },
+                desc: { en: "GPA: 3.67/4.00 | Honors: Alpha Pi Mu, Dean's List", kr: "학점: 3.67/4.00 | Alpha Pi Mu 명예 협회, 성적 우수 장학생" }
+            }],
+            experience: [
+                {
+                    period: "Sep 2025 - Nov 2025",
+                    company: { en: "DP Architect", kr: "DP Architect" },
+                    role: { en: "Backend Developer (Freelance)", kr: "백엔드 개발자 (프리랜서)" },
+                    desc: {
+                        en: "Designed RAG-based document retrieval for blueprints. Built RabbitMQ message queuing for scalability.",
+                        kr: "건축 도면의 RAG 기반 문서 검색 백엔드 설계. 확장성을 위한 RabbitMQ 메시지 큐 시스템 구축."
+                    }
+                },
+                {
+                    period: "Feb 2020 - Aug 2024",
+                    company: { en: "Songjee Tech", kr: "송지테크 (Songjee Tech)" },
+                    role: { en: "Quality Engineer Manager", kr: "품질 엔지니어 매니저" },
+                    desc: {
+                        en: "Managed 50+ Bruker spectrometers. Improved photon counting by 2-10x through hardware diagnostics.",
+                        kr: "50개 이상의 Bruker 분광기 교정 및 관리. 하드웨어 진단을 통해 광자 계수치 2~10배 개선."
+                    }
+                }
+            ],
+            projects: [
+                {
+                    period: "2025",
+                    name: { en: "National Wind Power Forecasting", kr: "전국 풍력 발전량 예측 경진대회" },
+                    role: { en: "Team Leader (3rd Place)", kr: "팀장 (전국 3위 수상)" },
+                    desc: { en: "Developed predictive model using LightGBM, improving accuracy by 8%.", kr: "LightGBM 기반 예측 모델 개발을 통해 정확도 8% 향상 달성." }
+                }
+            ],
+            skills: {
+                en: [
+                    { cat: "Programming", list: "Python, SQL, R, MATLAB, C++, JS" },
+                    { cat: "Backend", list: "FastAPI, MongoDB, RabbitMQ, Docker" },
+                    { cat: "Engineering", list: "SOLIDWORKS, Simio, SPC, DOE" }
+                ],
+                kr: [
+                    { cat: "프로그래밍", list: "Python, SQL, R, MATLAB, C++, JS" },
+                    { cat: "백엔드", list: "FastAPI, MongoDB, RabbitMQ, Docker" },
+                    { cat: "공학 도구", list: "SOLIDWORKS, Simio, SPC, DOE" }
+                ]
+            }
+        };
 
-<section id="skills">
-  <h2>Technical Skills</h2>
-  <p><strong>Programming:</strong> Python (Pandas, Scikit-learn), R, SQL, MATLAB, C/C++, JavaScript, HTML/CSS</p>
-  <p><strong>Data & Engineering:</strong> Tableau, Excel (VBA/Macros), SOLIDWORKS, Simio, Minitab, Docker, RabbitMQ, FastAPI</p>
-  <p><strong>Manufacturing:</strong> SPC, Control Charts, DOE, Lean Manufacturing, VSM, SMT Assembly</p>
-</section>
+        let lang = 'en';
+
+        function render() {
+            // 사이드바 & 소개
+            document.getElementById('sidebar-name').textContent = D.info.name[lang];
+            document.getElementById('sidebar-role').textContent = D.info.role[lang];
+            document.getElementById('about-text').textContent = D.info.about[lang];
+            
+            // 제목 번역
+            const titles = { 't-about':['About','소개'], 't-edu':['Education','학력'], 't-exp':['Experience','경력'], 't-proj':['Projects','프로젝트'], 't-skill':['Skills','기술'] };
+            Object.keys(titles).forEach(id => document.getElementById(id).textContent = lang === 'en' ? titles[id][0] : titles[id][1]);
+
+            // 메뉴 번역
+            document.querySelectorAll('.nav-link').forEach(el => el.textContent = el.getAttribute('data-' + lang));
+
+            // 학력 렌더링
+            document.getElementById('edu-list').innerHTML = D.education.map(e => `
+                <div class="entry-card">
+                    <div class="entry-header">
+                        <div class="entry-title">${e.school[lang]}</div>
+                        <div class="entry-period">${e.period}</div>
+                    </div>
+                    <div class="entry-sub">${e.degree[lang]}</div>
+                    <p style="font-size: 13px; color: var(--ink-faint);">${e.desc[lang]}</p>
+                </div>
+            `).join('');
+
+            // 경력 렌더링
+            document.getElementById('exp-list').innerHTML = D.experience.map(e => `
+                <div class="entry-card">
+                    <div class="entry-header">
+                        <div class="entry-title">${e.company[lang]}</div>
+                        <div class="entry-period">${e.period}</div>
+                    </div>
+                    <div class="entry-sub">${e.role[lang]}</div>
+                    <ul class="bullet-list"><li>${e.desc[lang]}</li></ul>
+                </div>
+            `).join('');
+
+            // 프로젝트 렌더링
+            document.getElementById('proj-list').innerHTML = D.projects.map(p => `
+                <div class="entry-card">
+                    <div class="entry-header">
+                        <div class="entry-title">${p.name[lang]}</div>
+                        <div class="entry-period">${p.period}</div>
+                    </div>
+                    <div class="entry-sub">${p.role[lang]}</div>
+                    <p style="font-size: 14px; color: var(--ink-light);">${p.desc[lang]}</p>
+                </div>
+            `).join('');
+
+            // 기술 스택 렌더링
+            document.getElementById('skill-list').innerHTML = D.skills[lang].map(s => `
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 16px; border-radius: 12px;">
+                    <div style="font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">${s.cat}</div>
+                    <div style="font-size: 13px; font-weight: 500;">${s.list}</div>
+                </div>
+            `).join('');
+        }
+
+        // 테마 설정
+        document.getElementById('theme-light').onclick = () => {
+            document.documentElement.setAttribute('data-theme', 'light');
+            document.getElementById('theme-light').classList.add('active');
+            document.getElementById('theme-dark').classList.remove('active');
+        };
+        document.getElementById('theme-dark').onclick = () => {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.getElementById('theme-dark').classList.add('active');
+            document.getElementById('theme-light').classList.remove('active');
+        };
+
+        // 언어 설정
+        document.getElementById('lang-en').onclick = () => {
+            lang = 'en';
+            document.getElementById('lang-en').classList.add('active');
+            document.getElementById('lang-kr').classList.remove('active');
+            render();
+        };
+        document.getElementById('lang-kr').onclick = () => {
+            lang = 'kr';
+            document.getElementById('lang-kr').classList.add('active');
+            document.getElementById('lang-en').classList.remove('active');
+            render();
+        };
+
+        render();
+    </script>
+</body>
+</html>
